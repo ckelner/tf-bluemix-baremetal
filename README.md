@@ -11,6 +11,7 @@ An example Terraform configuration template to deploy an IBM Cloud bare metal se
   - [Terraform Plan](#terraform-plan)
   - [Terraform Apply](#terraform-apply)
   - [Terraform Show](#terraform-show)
+  - [SL UI](#sl-ui)
   - [Ping & SSH](#ping--ssh)
   - [Terraform Destroy](#terraform-destroy)
 - [Setting up Provider Credentials](#setting-up-provider-credentials)
@@ -148,6 +149,9 @@ ibmcloud_infra_bare_metal.baremetal-test:
   private_network_only = false
   public_ipv4_address = 169.45.13.169
 ```
+
+## SL UI
+![sl-ui](./sl-ui.png)
 
 ## Ping & SSH
 ```
