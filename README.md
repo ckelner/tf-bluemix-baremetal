@@ -47,6 +47,141 @@ You will need to [Setup up IBM Cloud provider credentials](#setting-up-provider-
 - wdc01 : Washington 1
 - wdc04 : Washington 4
 
+# Example output
+
+## Terraform Plan
+```
+$ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+Note: You didn't specify an "-out" parameter to save this plan, so when
+"apply" is called, Terraform can't guarantee this is what will execute.
+
++ ibmcloud_infra_bare_metal.baremetal-test
+    datacenter:           "dal06"
+    domain:               "bar.test.com"
+    fixed_config_preset:  "S1270_32GB_1X1TBSATA_NORAID"
+    hostname:             "test"
+    hourly_billing:       "true"
+    network_speed:        "100"
+    os_reference_code:    "UBUNTU_16_64"
+    private_ipv4_address: "<computed>"
+    private_network_only: "false"
+    private_subnet:       "<computed>"
+    private_vlan_id:      "<computed>"
+    public_ipv4_address:  "<computed>"
+    public_subnet:        "<computed>"
+    public_vlan_id:       "<computed>"
+
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+```
+
+## Terraform Apply
+```
+$ terraform apply
+ibmcloud_infra_bare_metal.baremetal-test: Creating...
+  datacenter:           "" => "dal06"
+  domain:               "" => "bar.test.com"
+  fixed_config_preset:  "" => "S1270_32GB_1X1TBSATA_NORAID"
+  hostname:             "" => "test"
+  hourly_billing:       "" => "true"
+  network_speed:        "" => "100"
+  os_reference_code:    "" => "UBUNTU_16_64"
+  private_ipv4_address: "" => "<computed>"
+  private_network_only: "" => "false"
+  private_subnet:       "" => "<computed>"
+  private_vlan_id:      "" => "<computed>"
+  public_ipv4_address:  "" => "<computed>"
+  public_subnet:        "" => "<computed>"
+  public_vlan_id:       "" => "<computed>"
+ibmcloud_infra_bare_metal.baremetal-test: Still creating... (10s elapsed)
+ibmcloud_infra_bare_metal.baremetal-test: Still creating... (20s elapsed)
+ibmcloud_infra_bare_metal.baremetal-test: Still creating... (30s elapsed)
+...
+ibmcloud_infra_bare_metal.baremetal-test: Still creating... (30m40s elapsed)
+ibmcloud_infra_bare_metal.baremetal-test: Still creating... (30m50s elapsed)
+ibmcloud_infra_bare_metal.baremetal-test: Creation complete
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+The state of your infrastructure has been saved to the path
+below. This state is required to modify and destroy your
+infrastructure, so keep it safe. To inspect the complete state
+use the `terraform show` command.
+
+State path: terraform.tfstate
+```
+
+## Terraform Show
+```
+$ terraform show
+ibmcloud_infra_bare_metal.baremetal-test:
+  id = 253372
+  datacenter = dal06
+  domain = bar.test.com
+  fixed_config_preset = S1270_32GB_1X1TBSATA_NORAID
+  hostname = test
+  hourly_billing = true
+  network_speed = 100
+  os_reference_code = UBUNTU_16_64
+  private_ipv4_address = 10.146.117.117
+  private_network_only = false
+  public_ipv4_address = 169.45.13.169
+```
+
+## Ping & SSH
+```
+$ ping 169.45.13.169
+PING 169.45.13.169 (169.45.13.169): 56 data bytes
+64 bytes from 169.45.13.169: icmp_seq=0 ttl=54 time=34.413 ms
+64 bytes from 169.45.13.169: icmp_seq=1 ttl=54 time=31.297 ms
+64 bytes from 169.45.13.169: icmp_seq=2 ttl=54 time=33.252 ms
+^C
+--- 169.45.13.169 ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 31.297/32.987/34.413/1.286 ms
+
+$ ssh root@169.45.13.169
+The authenticity of host '169.45.13.169 (169.45.13.169)' can't be established.
+ECDSA key fingerprint is SHA256:jZASSET54ZjTbGRmL0LviYUfMq5LxVY/Lyf3a6Cm/Q8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '169.45.13.169' (ECDSA) to the list of known hosts.
+Password:
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-77-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@test:~#
+```
+
+## Terraform Destroy
+```
+ckelner:tf-bluemix-baremetal ckelner$ terraform destroy
+Do you really want to destroy?
+  Terraform will delete all your managed infrastructure.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+ibmcloud_infra_bare_metal.baremetal-test: Refreshing state... (ID: 253372)
+ibmcloud_infra_bare_metal.baremetal-test: Destroying...
+ibmcloud_infra_bare_metal.baremetal-test: Destruction complete
+
+Destroy complete! Resources: 1 destroyed.
+```
+
 # Setting up Provider Credentials
 
 To setup the IBM Cloud provider to work with this example there are a few options for managing credentials safely; here we'll cover the preferred method using environment variables. Other methods can be used, please see the [Terraform Getting Started Variable documentation](https://www.terraform.io/intro/getting-started/variables.html) for further details.
