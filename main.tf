@@ -22,6 +22,7 @@ resource "ibmcloud_infra_bare_metal" "baremetal-test" {
     network_speed = 100 # Optional
     hourly_billing = true # Optional
     private_network_only = false # Optional
+    # Values can be obtained by running `slcli hardware create-options`
     fixed_config_preset = "S1270_32GB_1X1TBSATA_NORAID"
 }
 
