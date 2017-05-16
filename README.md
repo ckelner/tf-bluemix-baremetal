@@ -2,6 +2,23 @@
 
 An example Terraform configuration template to deploy an IBM Cloud bare metal server.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+# Table of Contents
+
+- [Usage](#usage)
+- [Available Data Centers](#available-data-centers)
+- [Example output](#example-output)
+  - [Terraform Plan](#terraform-plan)
+  - [Terraform Apply](#terraform-apply)
+  - [Terraform Show](#terraform-show)
+  - [Ping & SSH](#ping--ssh)
+  - [Terraform Destroy](#terraform-destroy)
+- [Setting up Provider Credentials](#setting-up-provider-credentials)
+  - [Environment Variables using IBMid credentials](#environment-variables-using-ibmid-credentials)
+    - [IBMid Credentials](#ibmid-credentials)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Usage
 
 This is not a module, it is a terraform configuration template that can be cloned to be used.
